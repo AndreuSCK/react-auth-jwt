@@ -205,7 +205,11 @@ Creamos la ruta para /logout en `/routes/auth.js`
 
 // para hacer logout, configuramos un valor cualquiera para reemplazar el token
 router.get("/logout", withAuth, function (req, res) {
-  res.cookie("token", "deleted", { httpOnly: true }).sendStatus(204);
+  // seteamos el token con un valor vacío y una fecha de expiración en el pasado (Jan 1st 1970 00:00:00 GMT)
+  res.cookie("token", "", { expires: new Date(0) });
+  return res.status('200').json({
+    message: "signed out"
+  })
 });
 ```
 

@@ -99,9 +99,9 @@ router.post("/login", async function (req, res) {
 router.get("/logout", withAuth, function (req, res) {
   // seteamos el token con un valor vacío y una fecha de expiración en el pasado (Jan 1st 1970 00:00:00 GMT)
   res.cookie("token", "", { expires: new Date(0) });
-  return res.status('200').json({
-    message: "signed out"
-  })
+  return res.status("200").json({
+    message: "signed out",
+  });
 });
 
 /**
@@ -112,14 +112,14 @@ router.get("/logout", withAuth, function (req, res) {
 
 // obtenemos los datos del usuario
 router.get("/me", withAuth, async function (req, res) {
-    try {
-      // si el token valida en el middleware withAuth, tenemos disponible el email del usuario en req.email
-      const user = await User.findOne({ email: req.email }).select("-password");
-      // devolvemos el usuario
-      res.status(200).json(user);
-    } catch (error) {
-      next(error);
-    }
-  });
+  try {
+    // si el token valida en el middleware withAuth, tenemos disponible el email del usuario en req.email
+    const user = await User.findOne({ email: req.email }).select("-password");
+    // devolvemos el usuario
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
